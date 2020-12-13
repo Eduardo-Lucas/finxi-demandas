@@ -1,0 +1,35 @@
+[
+  {
+    "model": "droids.peca",
+    "pk": 1,
+    "fields": {
+      "codigo": "123456",
+      "descricao": "Lanterna",
+      "urgente": "Sim",
+      "data_cadastro": "2020-04-11T23:07:11.686Z",
+      "data_alteracao": "2020-04-11T23:07:11.686Z"
+    }
+  },
+  {
+    "model": "droids.peca",
+    "pk": 2,
+    "fields": {
+      "codigo": "789012",
+      "descricao": "Pedal de Freio",
+      "urgente": "Sim",
+      "data_cadastro": "2020-04-11T23:07:52.070Z",
+      "data_alteracao": "2020-04-11T23:07:52.070Z"
+    }
+  },
+  {
+    "model": "droids.peca",
+    "pk": 3,
+    "fields": {
+      "codigo": "345678",
+      "descricao": "Capot",
+      "urgente": "Sim",
+      "data_cadastro": "2020-04-11T23:08:22.582Z",
+      "data_alteracao": "2020-04-11T23:08:22.582Z"
+    }
+  }
+]
