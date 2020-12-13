@@ -15,10 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from rest_framework.schemas import get_schema_view
 
 from .views import ping
+from droids import views as droids_api
+
+schema_view = get_schema_view(title='Desafio FINXI',
+                              url='https://127.0.0.1:8000/api/')
+
+router = routers.DefaultRouter()
+router.register('pecas', droids_api.PecaViewSet)
+router.register('anunciantes', droids_api.AnuncianteViewSet)
+router.register('demandas', droids_api.DemandaViewSet)
 
 urlpatterns = [
+    path('schema/', schema_view),
+    path('api/', include(router.urls)),
+    path('accounts/', include("accounts.urls")),
     path('admin/', admin.site.urls),
     path('ping/', ping, name="ping"),
     path("", include("droids.urls")),

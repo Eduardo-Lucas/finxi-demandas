@@ -1,12 +1,26 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
-from .models import Peca, User
+from .models import Peca, User, Anunciante, Demanda
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Anunciante)
+class AnuncianteAdmin(admin.ModelAdmin):
+    list_display = (
+        "nome", "telefone", "celular", "cidade", "estado",
+    )
+
+
+@admin.register(Demanda)
+class DemandaAdmin(admin.ModelAdmin):
+    list_display = (
+        "id", "anunciante", "peca", "status",
+    )
 
 
 @admin.register(Peca)

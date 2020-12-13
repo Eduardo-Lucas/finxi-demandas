@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 
+from finxi_demandas import settings
+
 
 class UserManager(BaseUserManager):
 
@@ -44,6 +46,7 @@ SIM_NAO_CHOICES = (
 
 
 class Peca(models.Model):
+    """ Manutenção do Cadastro de Peças """
     codigo = models.CharField(max_length=255)
     descricao = models.CharField(max_length=255)
     urgente = models.CharField(max_length=3, choices=SIM_NAO_CHOICES, default='Não')
@@ -53,3 +56,34 @@ class Peca(models.Model):
     def __str__(self):
         return f"{self.descricao}"
 
+
+class Anunciante(models.Model):
+    """ Manutenção do Cadastro de Anunciantes """
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=100, )
+    telefone = models.CharField(max_length=30, null=True, blank=True)
+    celular = models.CharField("Celular", max_length=20, blank=True, null=True)
+    email = models.CharField(max_length=50, null=True, blank=True)
+    endereco = models.CharField("Endereço", max_length=60, blank=True, null=True)
+    complemento = models.CharField("Complemento", max_length=60, blank=True, null=True)
+    numero = models.CharField("Número", max_length=20, blank=True, null=True)
+    bairro = models.CharField("Bairro", max_length=50, blank=True, null=True)
+    cidade = models.CharField(max_length=50, blank=True, null=True)
+    cep = models.CharField("CEP", max_length=9, null=True, blank=True, )
+    estado = models.CharField("UF", max_length=2, blank=True, null=True)
+    pais = models.CharField(max_length=50, blank=True, null=True, default='Brasil')
+
+    def __str__(self):
+        return self.nome
+
+
+STATUS_CHOICES = (
+    ('Aberta', 'Aberta'),
+    ('Finalizada', 'Finalizada'),
+)
+
+
+class Demanda(models.Model):
+    anunciante = models.ForeignKey(Anunciante, on_delete=models.CASCADE)
+    peca = models.ForeignKey(Peca, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Aberta')

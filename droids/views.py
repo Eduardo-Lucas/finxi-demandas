@@ -1,10 +1,10 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets, authentication, permissions
 
-from .models import Peca
-from .serializers import PecaSerializer
+from .models import Peca, Anunciante, Demanda
+from .serializers import PecaSerializer, AnuncianteSerializer, DemandaSerializer
 
 
 class PecaList(APIView):
@@ -32,3 +32,30 @@ class PecaDetail(APIView):
         peca = self.get_object(pk)
         serializer = PecaSerializer(peca)
         return Response(serializer.data)
+
+
+class PecaViewSet(viewsets.ModelViewSet):
+    """ Lista todas as Pecas. """
+    queryset = Peca.objects.all()
+    serializer_class = PecaSerializer
+
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class AnuncianteViewSet(viewsets.ModelViewSet):
+    """ Lista todos os Anunciantes. """
+    queryset = Anunciante.objects.all()
+    serializer_class = AnuncianteSerializer
+
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+
+class DemandaViewSet(viewsets.ModelViewSet):
+    """ Lista todos as Demandas. """
+    queryset = Demanda.objects.all()
+    serializer_class = DemandaSerializer
+
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
