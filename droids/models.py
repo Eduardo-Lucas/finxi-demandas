@@ -35,3 +35,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+SIM_NAO_CHOICES = (
+    ('Sim', 'Sim'),
+    ('Não', 'Não')
+)
+
+
+class Peca(models.Model):
+    codigo = models.CharField(max_length=255)
+    descricao = models.CharField(max_length=255)
+    urgente = models.CharField(max_length=3, choices=SIM_NAO_CHOICES, default='Não')
+    data_cadastro = models.DateTimeField(auto_now_add=True)
+    data_alteracao = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.descricao}"
+
