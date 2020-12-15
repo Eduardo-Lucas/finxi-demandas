@@ -5,3 +5,4 @@ pytest-django==3.9.0
 pytest==5.4.1
 pyyaml
 uritemplate
+# pillow>=4.0.0

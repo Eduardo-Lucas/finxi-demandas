@@ -53,9 +53,17 @@ class AnuncianteViewSet(viewsets.ModelViewSet):
 
 
 class DemandaViewSet(viewsets.ModelViewSet):
-    """ Lista todos as Demandas. """
+    """ Lista todos as Demandas do respectivo Usuário. """
     queryset = Demanda.objects.all()
     serializer_class = DemandaSerializer
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        """Retrieve the Demand for the authenticated user"""
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        """ Create a new Demand """
+        serializer.save(user=self.request.user)

@@ -19,7 +19,7 @@ class AnuncianteAdmin(admin.ModelAdmin):
 @admin.register(Demanda)
 class DemandaAdmin(admin.ModelAdmin):
     list_display = (
-        "id", "anunciante", "peca", "status",
+        "id", "user", "peca", "quantidade", "status",
     )
 
 

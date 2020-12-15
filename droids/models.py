@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
+from django.utils.safestring import mark_safe
 
 from finxi_demandas import settings
 
@@ -84,6 +85,20 @@ STATUS_CHOICES = (
 
 
 class Demanda(models.Model):
-    anunciante = models.ForeignKey(Anunciante, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     peca = models.ForeignKey(Peca, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField(default=1)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Aberta')
+    # thumbnail = models.ImageField(null=True, blank=True)
+
+    # def save(self):
+    #     if self.status == "Aberta":
+    #         self.thumbnail = 'static/imb/ok-icon-3099.png'
+    #     else:
+    #         self.thumbnail = 'static/imb/close-icon-13574.png'
+    #
+    # @property
+    # def thumbnail_preview(self):
+    #     if self.thumbnail:
+    #         return mark_safe('<img src="{}" width="300" height="300" />'.format(self.thumbnail.url))
+    #     return ""
